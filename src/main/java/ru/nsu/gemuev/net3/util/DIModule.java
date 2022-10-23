@@ -5,9 +5,10 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import ru.nsu.gemuev.net3.controllers.MainViewController;
+import ru.nsu.gemuev.net3.controllers.PlaceDescriptionController;
 import ru.nsu.gemuev.net3.controllers.PlacesListViewController;
-import ru.nsu.gemuev.net3.controllers.SceneSwitcher;
-import ru.nsu.gemuev.net3.model.PlaceEntered;
+import ru.nsu.gemuev.net3.controllers.SceneManager;
+import ru.nsu.gemuev.net3.model.usecases.PlaceEntered;
 import ru.nsu.gemuev.net3.net.PlaceRepositoryImpl;
 
 public class DIModule extends AbstractModule {
@@ -24,8 +25,8 @@ public class DIModule extends AbstractModule {
     }
 
     @Provides
-    SceneSwitcher getSceneSwitcher(EventBus eventBus){
-        SceneSwitcher sceneSwitcher = new SceneSwitcher();
+    SceneManager getSceneSwitcher(EventBus eventBus){
+        SceneManager sceneSwitcher = new SceneManager();
         eventBus.register(sceneSwitcher);
         return sceneSwitcher;
     }
@@ -40,6 +41,13 @@ public class DIModule extends AbstractModule {
     @Provides
     PlacesListViewController getPlacesListViewController(EventBus eventBus){
         PlacesListViewController controller = new PlacesListViewController(eventBus);
+        eventBus.register(controller);
+        return controller;
+    }
+
+    @Provides
+    PlaceDescriptionController getPlaceDescriptionController(EventBus eventBus){
+        PlaceDescriptionController controller = new PlaceDescriptionController(eventBus);
         eventBus.register(controller);
         return controller;
     }

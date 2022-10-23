@@ -9,7 +9,7 @@
             <ListView fx:id="placeList" layoutX="12.0" layoutY="17.0" prefHeight="262.0" prefWidth="516.0" />
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="68.0" prefWidth="541.0">
-            <Button fx:id="backToMainButton" layoutX="228.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToMainButtonPressed" text="Back" />
+            <Button fx:id="backToMainButton" layoutX="228.0" layoutY="14.0" mnemonicParsing="false" onAction="#showMainView" text="Back" />
         </AnchorPane>
     </SplitPane>
 </Pane>

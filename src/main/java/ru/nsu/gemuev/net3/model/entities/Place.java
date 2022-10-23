@@ -1,4 +1,4 @@
-package ru.nsu.gemuev.net3.model;
+package ru.nsu.gemuev.net3.model.entities;
 
 import lombok.Data;
 
@@ -6,5 +6,7 @@ import lombok.Data;
 public class Place {
     String country;
     String name;
+    String city;
+    String street;
     Coordinate coordinate;
 }

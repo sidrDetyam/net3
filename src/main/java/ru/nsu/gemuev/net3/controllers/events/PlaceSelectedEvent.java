@@ -5,11 +5,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import ru.nsu.gemuev.net3.model.entities.Place;
 
-import java.util.List;
-
 @RequiredArgsConstructor
-public class PlaceListReceiveEvent extends ShowPlaceListViewEvent{
+public class PlaceSelectedEvent extends ShowPlaceDescriptionViewEvent{
     @NonNull
     @Getter
-    private final List<Place> placeList;
+    private final Place selectedPlace;
 }

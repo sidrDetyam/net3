@@ -1,7 +1,9 @@
-package ru.nsu.gemuev.net3.model;
+package ru.nsu.gemuev.net3.model.usecases;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import ru.nsu.gemuev.net3.model.ports.PlaceRepository;
+import ru.nsu.gemuev.net3.model.entities.Place;
 
 import java.util.List;
 

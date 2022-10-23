@@ -9,19 +9,22 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import ru.nsu.gemuev.net3.Main;
-import ru.nsu.gemuev.net3.controllers.events.ReturnToMainViewEvent;
-import ru.nsu.gemuev.net3.controllers.events.PlaceListReceiveEvent;
+import ru.nsu.gemuev.net3.controllers.events.ShowMainViewEvent;
+import ru.nsu.gemuev.net3.controllers.events.ShowPlaceDescriptionViewEvent;
+import ru.nsu.gemuev.net3.controllers.events.ShowPlaceListViewEvent;
 import ru.nsu.gemuev.net3.exceptions.UIInitializeException;
 import ru.nsu.gemuev.net3.util.DIContainer;
 
 import java.io.IOException;
 
 @Log4j2
-public class SceneSwitcher {
+@SuppressWarnings("unused")
+public class SceneManager {
     @Setter
     private Stage stage;
     private final Scene mainScene;
     private final Scene placeListScene;
+    private final Scene placeDescriptionScene;
 
     private static Parent loadFXML(@NonNull String name) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(name));
@@ -29,10 +32,11 @@ public class SceneSwitcher {
         return fxmlLoader.load();
     }
 
-    public SceneSwitcher() {
+    public SceneManager() {
         try {
             placeListScene = new Scene(loadFXML("PlacesListView.fxml"), 600, 400);
             mainScene = new Scene(loadFXML("MainView.fxml"), 600, 400);
+            placeDescriptionScene = new Scene(loadFXML("PlaceDescriptionView.fxml"), 600, 400);
 
         } catch (IOException e) {
             log.error("Ui init fail " + e.getMessage());
@@ -40,23 +44,19 @@ public class SceneSwitcher {
         }
     }
 
-    public void switchToMainScene(){
-        stage.setScene(mainScene);
-    }
 
-    public void switchToPlaceListScene(){
+    @Subscribe
+    public void showPlaceListView(ShowPlaceListViewEvent e){
         stage.setScene(placeListScene);
     }
 
     @Subscribe
-    @SuppressWarnings("unused")
-    public void placeListReceiveEvent(PlaceListReceiveEvent e){
-        switchToPlaceListScene();
+    public void showMainView(ShowMainViewEvent e){
+        stage.setScene(mainScene);
     }
 
     @Subscribe
-    @SuppressWarnings("unused")
-    public void backToMainView(ReturnToMainViewEvent e){
-        switchToMainScene();
+    public void showPlaceDescriptionView(ShowPlaceDescriptionViewEvent e){
+        stage.setScene(placeDescriptionScene);
     }
 }

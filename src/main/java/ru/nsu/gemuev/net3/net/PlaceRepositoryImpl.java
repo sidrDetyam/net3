@@ -6,9 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import ru.nsu.gemuev.net3.exceptions.NetException;
-import ru.nsu.gemuev.net3.model.Coordinate;
-import ru.nsu.gemuev.net3.model.Place;
-import ru.nsu.gemuev.net3.model.PlaceRepository;
+import ru.nsu.gemuev.net3.model.entities.Coordinate;
+import ru.nsu.gemuev.net3.model.entities.Place;
+import ru.nsu.gemuev.net3.model.ports.PlaceRepository;
 import ru.nsu.gemuev.net3.util.PropertyGetter;
 
 import java.net.URI;
@@ -26,7 +26,7 @@ public class PlaceRepositoryImpl implements PlaceRepository {
         String apiKey = PropertyGetter.getPropertyOrThrow("graphhopper");
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI("https://graphhopper.com/api/1/geocode?q=%s&key=%s&locale=ru"
+                .uri(new URI("https://graphhopper.com/api/1/geocode?q=%s&key=%s&locale=ru&limit=25"
                         .formatted(placeName, apiKey)))
                 .GET()
                 .build();

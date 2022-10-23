@@ -2,7 +2,8 @@ package ru.nsu.gemuev.net3;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import ru.nsu.gemuev.net3.controllers.SceneSwitcher;
+import ru.nsu.gemuev.net3.controllers.SceneManager;
+import ru.nsu.gemuev.net3.controllers.events.ShowMainViewEvent;
 import ru.nsu.gemuev.net3.util.DIContainer;
 
 public class Main extends Application {
@@ -11,9 +12,9 @@ public class Main extends Application {
     public void start(Stage stage){
         stage.setTitle("Lab 3");
 
-        SceneSwitcher sceneSwitcher = DIContainer.getInjector().getInstance(SceneSwitcher.class);
+        SceneManager sceneSwitcher = DIContainer.getInjector().getInstance(SceneManager.class);
         sceneSwitcher.setStage(stage);
-        sceneSwitcher.switchToMainScene();
+        sceneSwitcher.showMainView(new ShowMainViewEvent());
         stage.show();
     }
 

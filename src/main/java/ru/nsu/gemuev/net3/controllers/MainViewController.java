@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import ru.nsu.gemuev.net3.controllers.events.PlaceListReceiveEvent;
-import ru.nsu.gemuev.net3.model.PlaceEntered;
+import ru.nsu.gemuev.net3.model.usecases.PlaceEntered;
 
 import java.util.concurrent.CompletableFuture;
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.gemuev.net3.controllers.PlaceDescriptionController">
+   <children>
+      <Button layoutX="154.0" layoutY="297.0" mnemonicParsing="false" onAction="#showListView" text="Return to list" />
+      <Button layoutX="391.0" layoutY="297.0" mnemonicParsing="false" onAction="#showMainView" text="Return to input" />
+   </children>
+</AnchorPane>

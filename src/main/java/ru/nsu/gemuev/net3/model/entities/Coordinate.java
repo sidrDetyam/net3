@@ -1,4 +1,4 @@
-package ru.nsu.gemuev.net3.model;
+package ru.nsu.gemuev.net3.model.entities;
 
 import lombok.Data;
 

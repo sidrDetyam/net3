@@ -18,11 +18,15 @@ module ru.nsu.gemuev.net {
     opens ru.nsu.gemuev.net3 to javafx.fxml;
     exports ru.nsu.gemuev.net3;
     opens ru.nsu.gemuev.net3.net;
-    opens ru.nsu.gemuev.net3.model;
-    exports ru.nsu.gemuev.net3.model;
     exports ru.nsu.gemuev.net3.controllers.events;
     exports ru.nsu.gemuev.net3.controllers;
     opens ru.nsu.gemuev.net3.controllers to javafx.fxml;
     opens ru.nsu.gemuev.net3.util;
     exports ru.nsu.gemuev.net3.util;
+    exports ru.nsu.gemuev.net3.model.entities;
+    opens ru.nsu.gemuev.net3.model.entities;
+    exports ru.nsu.gemuev.net3.model.usecases;
+    opens ru.nsu.gemuev.net3.model.usecases;
+    exports ru.nsu.gemuev.net3.model.ports;
+    opens ru.nsu.gemuev.net3.model.ports;
 }

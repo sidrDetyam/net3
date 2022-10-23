@@ -26,7 +26,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'ru.nsu.gemuev.net3'
-    mainClass = 'ru.nsu.gemuev.net3.HelloApplication'
+    mainClass = 'ru.nsu.gemuev.net3.Main'
 }
 
 javafx {

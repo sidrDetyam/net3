@@ -8,7 +8,7 @@ import ru.nsu.gemuev.net3.model.entities.Place;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class PlaceEntered {
+public class PlaceNameEntered {
     @NonNull
     private PlaceRepository placeRepository;
 

@@ -15,6 +15,7 @@ public class Main extends Application {
         SceneManager sceneSwitcher = DIContainer.getInjector().getInstance(SceneManager.class);
         sceneSwitcher.setStage(stage);
         sceneSwitcher.showMainView(new ShowMainViewEvent());
+        stage.setResizable(false);
         stage.show();
     }
 

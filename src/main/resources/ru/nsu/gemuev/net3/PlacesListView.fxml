@@ -3,13 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.gemuev.net3.controllers.PlacesListViewController">
-    <SplitPane dividerPositions="0.8559127439724454" layoutX="30.0" layoutY="25.0" orientation="VERTICAL" prefHeight="350.0" prefWidth="541.0">
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-            <ListView fx:id="placeList" layoutX="12.0" layoutY="17.0" prefHeight="262.0" prefWidth="516.0" />
-        </AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="68.0" prefWidth="541.0">
-            <Button fx:id="backToMainButton" layoutX="228.0" layoutY="14.0" mnemonicParsing="false" onAction="#showMainView" text="Back" />
-        </AnchorPane>
-    </SplitPane>
-</Pane>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.gemuev.net3.controllers.PlacesListViewController">
+
+    <ListView fx:id="placeList" focusTraversable="false" prefHeight="353.0" prefWidth="600.0" />
+    <Button fx:id="backToMainButton" layoutX="280.0" layoutY="359.0" mnemonicParsing="false" onAction="#showMainView" text="Back" />
+    <ProgressIndicator fx:id="progressIndicator" layoutX="539.0" layoutY="358.0" prefHeight="27.0" prefWidth="46.0" visible="false" />
+</AnchorPane>

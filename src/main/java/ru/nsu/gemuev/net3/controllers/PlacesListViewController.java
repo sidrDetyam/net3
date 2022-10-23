@@ -3,25 +3,25 @@ package ru.nsu.gemuev.net3.controllers;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MultipleSelectionModel;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import ru.nsu.gemuev.net3.controllers.events.PlaceListReceiveEvent;
 import ru.nsu.gemuev.net3.controllers.events.PlaceSelectedEvent;
 import ru.nsu.gemuev.net3.controllers.events.ShowMainViewEvent;
-import ru.nsu.gemuev.net3.controllers.events.ShowPlaceListViewEvent;
 import ru.nsu.gemuev.net3.model.entities.Place;
 
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
 @SuppressWarnings("unused")
-public class PlacesListViewController {
+public class PlacesListViewController implements Initializable {
 
+    @FXML
+    private ProgressIndicator progressIndicator;
     @FXML
     private ListView<Place> placeList;
     @FXML
@@ -44,15 +44,13 @@ public class PlacesListViewController {
         placeList.setItems(items);
     }
 
-    @Subscribe
-    public void showPlaceListEvent(ShowPlaceListViewEvent e){
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         MultipleSelectionModel<Place> selectionModel = placeList.getSelectionModel();
-        selectionModel.selectedItemProperty().addListener(new ChangeListener<>() {
-            public void changed(ObservableValue<? extends Place> __, Place ___, Place selectedPlace) {
-                if (selectedPlace != null) {
-                    selectionModel.selectedItemProperty().removeListener(this);
-                    eventBus.post(new PlaceSelectedEvent(selectedPlace));
-                }
+        selectionModel.setSelectionMode(SelectionMode.SINGLE);
+        selectionModel.selectedItemProperty().addListener((__, ___, selectedPlace) -> {
+            if (selectedPlace != null) {
+                eventBus.post(new PlaceSelectedEvent(selectedPlace));
             }
         });
     }

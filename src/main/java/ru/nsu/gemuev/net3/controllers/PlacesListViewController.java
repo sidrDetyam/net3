@@ -3,6 +3,7 @@ package ru.nsu.gemuev.net3.controllers;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -40,8 +41,10 @@ public class PlacesListViewController implements Initializable {
 
     @Subscribe
     public void placeListReceive(PlaceListReceiveEvent e) {
-        ObservableList<Place> items = FXCollections.observableArrayList(List.copyOf(e.getPlaceList()));
-        placeList.setItems(items);
+        Platform.runLater(() -> {
+            ObservableList<Place> items = FXCollections.observableArrayList(List.copyOf(e.getPlaceList()));
+            placeList.setItems(items);
+        });
     }
 
     @Override

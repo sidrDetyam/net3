@@ -1,6 +1,7 @@
 package ru.nsu.gemuev.net3.controllers;
 
 import com.google.common.eventbus.Subscribe;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -44,19 +45,18 @@ public class SceneManager {
         }
     }
 
-
     @Subscribe
     public void showPlaceListView(ShowPlaceListViewEvent e){
-        stage.setScene(placeListScene);
+        Platform.runLater(() -> stage.setScene(placeListScene));
     }
 
     @Subscribe
     public void showMainView(ShowMainViewEvent e){
-        stage.setScene(mainScene);
+        Platform.runLater(() -> stage.setScene(mainScene));
     }
 
     @Subscribe
     public void showPlaceDescriptionView(ShowPlaceDescriptionViewEvent e){
-        stage.setScene(placeDescriptionScene);
+        Platform.runLater(() -> stage.setScene(placeDescriptionScene));
     }
 }

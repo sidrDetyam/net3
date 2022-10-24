@@ -11,14 +11,14 @@ import java.util.stream.Stream;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AttractionPlace {
+public class Attraction {
     String name;
     String type;
-    String id;
+    String description;
 
     @Override
     public String toString(){
-        return Stream.of(name, type)
+        return Stream.of(name, description)
                 .filter(Objects::nonNull)
                 .collect(Collectors.joining(", "));
     }

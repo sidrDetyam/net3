@@ -4,12 +4,11 @@ import com.google.common.eventbus.EventBus;
 import com.google.inject.Inject;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import lombok.extern.log4j.Log4j2;
 import ru.nsu.gemuev.net3.controllers.events.PlaceListReceiveEvent;
-import ru.nsu.gemuev.net3.model.usecases.PlaceNameEntered;
+import ru.nsu.gemuev.net3.model.usecases.PlacesByName;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -19,11 +18,11 @@ public class MainViewController {
     private ProgressIndicator progressIndicator;
     @FXML
     private TextField placeNameField;
-    private final PlaceNameEntered placeEntered;
+    private final PlacesByName placeEntered;
     private final EventBus eventBus;
 
     @Inject
-    public MainViewController(EventBus eventBus, PlaceNameEntered placeEntered) {
+    public MainViewController(EventBus eventBus, PlacesByName placeEntered) {
         this.eventBus = eventBus;
         this.placeEntered = placeEntered;
     }
@@ -41,11 +40,7 @@ public class MainViewController {
                         }
                         else{
                             log.error(exception.getMessage());
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("Something goes wrong...");
-                            alert.setHeaderText(null);
-                            alert.setContentText(exception.getMessage());
-                            alert.showAndWait();
+                            ErrorAlert.showErrorAlert(exception.getMessage());
                         }
                     });
                     return null;

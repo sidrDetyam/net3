@@ -4,7 +4,11 @@ import lombok.Data;
 
 @Data
 public class Weather {
-    String type;
-    Double windSpeed;
-    Double temperature;
+    double pressure;
+    double temperature;
+
+    @Override
+    public String toString(){
+        return "pressure: %s, temperature: %s".formatted(pressure, temperature);
+    }
 }

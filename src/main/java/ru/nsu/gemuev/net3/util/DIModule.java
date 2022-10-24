@@ -9,7 +9,7 @@ import ru.nsu.gemuev.net3.controllers.AttractionsListController;
 import ru.nsu.gemuev.net3.controllers.PlacesListViewController;
 import ru.nsu.gemuev.net3.controllers.SceneManager;
 import ru.nsu.gemuev.net3.model.usecases.AttractionsNearPlace;
-import ru.nsu.gemuev.net3.model.usecases.PlaceNameEntered;
+import ru.nsu.gemuev.net3.model.usecases.PlacesByName;
 import ru.nsu.gemuev.net3.model.usecases.WeatherNearPlace;
 import ru.nsu.gemuev.net3.net.AttractionRepositoryImpl;
 import ru.nsu.gemuev.net3.net.PlaceRepositoryImpl;
@@ -24,8 +24,8 @@ public class DIModule extends AbstractModule {
     }
 
     @Provides
-    PlaceNameEntered getPlaceEntered() {
-        return new PlaceNameEntered(new PlaceRepositoryImpl());
+    PlacesByName getPlaceEntered() {
+        return new PlacesByName(new PlaceRepositoryImpl());
     }
 
     @Provides
@@ -46,7 +46,7 @@ public class DIModule extends AbstractModule {
     }
 
     @Provides
-    MainViewController getMainViewController(EventBus eventBus, PlaceNameEntered placeEntered) {
+    MainViewController getMainViewController(EventBus eventBus, PlacesByName placeEntered) {
         MainViewController controller = new MainViewController(eventBus, placeEntered);
         eventBus.register(controller);
         return controller;

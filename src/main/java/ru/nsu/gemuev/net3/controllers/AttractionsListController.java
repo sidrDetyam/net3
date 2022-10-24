@@ -10,10 +10,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
+import lombok.extern.log4j.Log4j2;
 import ru.nsu.gemuev.net3.controllers.events.PlaceSelectedEvent;
-import ru.nsu.gemuev.net3.controllers.events.ShowMainViewEvent;
 import ru.nsu.gemuev.net3.controllers.events.ShowPlaceListViewEvent;
-import ru.nsu.gemuev.net3.model.entities.AttractionPlace;
+import ru.nsu.gemuev.net3.model.entities.Attraction;
 import ru.nsu.gemuev.net3.model.entities.Place;
 import ru.nsu.gemuev.net3.model.usecases.AttractionsNearPlace;
 import ru.nsu.gemuev.net3.model.usecases.WeatherNearPlace;
@@ -22,12 +22,13 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("unused")
+@Log4j2
 public class AttractionsListController {
 
     @FXML
     private Label weatherLabel;
     @FXML
-    private ListView<AttractionPlace> attractionList;
+    private ListView<Attraction> attractionList;
     @FXML
     private ProgressIndicator progressIndicator;
 
@@ -44,21 +45,19 @@ public class AttractionsListController {
         this.weatherNearPlace = weatherNearPlace;
     }
 
-    public void showMainView() {
-        eventBus.post(new ShowMainViewEvent());
-    }
-
     public void showListView() {
         eventBus.post(new ShowPlaceListViewEvent());
     }
 
-    private void setItemsList(List<AttractionPlace> attractionPlaces){
-        ObservableList<AttractionPlace> items = FXCollections.observableArrayList(attractionPlaces);
-        attractionList.setItems(items);
+    private void setItemsList(List<Attraction> attractionPlaces){
+        Platform.runLater(() -> {
+            ObservableList<Attraction> items = FXCollections.observableArrayList(attractionPlaces);
+            attractionList.setItems(items);
+        });
     }
 
     private void setWeatherLabel(String weatherInfo){
-        weatherLabel.setText(weatherInfo);
+        Platform.runLater(() -> weatherLabel.setText(weatherInfo));
     }
 
     @Subscribe
@@ -66,20 +65,23 @@ public class AttractionsListController {
         Place place = e.getSelectedPlace();
         progressIndicator.setVisible(true);
 
-        var cf1 = CompletableFuture.supplyAsync(() -> attractionsNearPlace
-                        .getAttractionPlaces(place.getCoordinate().getLat(), place.getCoordinate().getLng(), 1000))
-                .thenAccept(attractionPlaces -> Platform.runLater(() -> setItemsList(attractionPlaces)));
+        var attractionsRequest = CompletableFuture.supplyAsync(() -> attractionsNearPlace
+                        .getAttractionPlaces(place.getCoordinate().getLat(), place.getCoordinate().getLng(), 250))
+                .thenAccept(this::setItemsList);
 
-        var cf2 = CompletableFuture.supplyAsync(() -> weatherNearPlace
+        var weatherRequest = CompletableFuture.supplyAsync(() -> weatherNearPlace
                 .getWeather(place.getCoordinate().getLat(), place.getCoordinate().getLng()))
-                        .handle((weather, exception) -> {
-                            if(exception!=null){
-                                System.out.println(exception);
-                            }
-                            return 0;
-                        });
+                .thenAccept(weather -> setWeatherLabel(weather.toString()));
 
-        CompletableFuture.allOf(cf1, cf2).thenAccept(__ ->
-                Platform.runLater(() -> progressIndicator.setVisible(false)));
+        CompletableFuture.allOf(attractionsRequest, weatherRequest).handle((__, ex) -> {
+            Platform.runLater(() -> {
+                progressIndicator.setVisible(false);
+                if(ex != null){
+                    ErrorAlert.showErrorAlert(ex.getMessage());
+                    log.error(ex);
+                }
+            });
+            return null;
+        });
     }
 }

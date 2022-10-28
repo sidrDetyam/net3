@@ -8,11 +8,11 @@ import java.util.stream.Stream;
 
 @Data
 public class Place {
-    String country;
-    String name;
-    String city;
-    String street;
-    Coordinate coordinate;
+    private String country;
+    private String name;
+    private String city;
+    private String street;
+    private Coordinate coordinate;
 
     @Override
     public String toString(){

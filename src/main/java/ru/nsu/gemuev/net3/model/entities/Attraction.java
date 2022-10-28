@@ -12,9 +12,9 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Attraction {
-    String name;
-    String type;
-    String description;
+    private String name;
+    private String type;
+    private String description;
 
     @Override
     public String toString(){

@@ -13,12 +13,12 @@ import java.time.Duration;
 
 public class RequestSender {
 
-    private static final Duration TIME_OUT = Duration.ofMillis(3000);
+    private static final Duration TIME_OUT = Duration.ofMillis(10000);
 
     private RequestSender(){}
 
     @SneakyThrows
-    public static String getRequestBody(@NonNull String req){
+    public static String getResponse(@NonNull String req){
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI(req))
                 .GET()

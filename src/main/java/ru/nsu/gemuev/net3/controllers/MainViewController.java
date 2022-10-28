@@ -6,10 +6,13 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import ru.nsu.gemuev.net3.controllers.events.PlaceListReceiveEvent;
 import ru.nsu.gemuev.net3.model.usecases.PlacesByName;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 
 @Log4j2
@@ -31,7 +34,7 @@ public class MainViewController {
     public void onPlaceNameInput() {
         progressIndicator.setVisible(true);
         CompletableFuture
-                .supplyAsync(() -> placeEntered.listOfPlaces(placeNameField.getText()))
+                .supplyAsync(() -> placeEntered.listOfPlaces(encodeValue(placeNameField.getText())))
                 .handle((placeList, exception) -> {
                     Platform.runLater(() -> {
                         progressIndicator.setVisible(false);
@@ -45,5 +48,9 @@ public class MainViewController {
                     });
                     return null;
                 });
+    }
+
+    private static String encodeValue(@NonNull String value) {
+            return URLEncoder.encode(value, StandardCharsets.UTF_8);
     }
 }

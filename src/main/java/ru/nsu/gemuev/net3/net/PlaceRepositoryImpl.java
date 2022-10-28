@@ -21,7 +21,7 @@ public class PlaceRepositoryImpl implements PlaceRepository {
     public List<Place> getAllPlaces(@NonNull String placeName) {
         String apiKey = PropertyGetter.getPropertyOrThrow("graphhopper");
 
-        String responseBody = RequestSender.getRequestBody(placesUrl.formatted(placeName, apiKey));
+        String responseBody = RequestSender.getResponse(placesUrl.formatted(placeName, apiKey));
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.readTree(responseBody).get("hits").toString();
         return List.copyOf(objectMapper.readValue(json, new TypeReference<List<PlaceJackson>>() {}));

@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class Weather {
-    double pressure;
-    double temperature;
+    private double pressure;
+    private double temperature;
 
     @Override
     public String toString(){

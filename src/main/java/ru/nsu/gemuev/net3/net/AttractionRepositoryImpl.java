@@ -1,10 +1,8 @@
 package ru.nsu.gemuev.net3.net;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Data;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import ru.nsu.gemuev.net3.model.entities.Attraction;
@@ -24,7 +22,7 @@ public class AttractionRepositoryImpl implements AttractionRepository {
     private String getDescriptionByXid(@NonNull String xid) {
         try {
             String apiKey = PropertyGetter.getPropertyOrThrow("opentripmap");
-            return objectMapper.readTree(RequestSender.getRequestBody(placeDescriptionUrl.formatted(xid, apiKey)))
+            return objectMapper.readTree(RequestSender.getResponse(placeDescriptionUrl.formatted(xid, apiKey)))
                     .get("kinds").toString();
         } catch (JsonProcessingException e) {
             return "";
@@ -36,41 +34,18 @@ public class AttractionRepositoryImpl implements AttractionRepository {
     public List<Attraction> getAllAttractions(double lat, double lng, double radius) {
         String apiKey = PropertyGetter.getPropertyOrThrow("opentripmap");
         String responseBody = RequestSender
-                .getRequestBody(placesInRadiusUrl.formatted(radius, lng, lat, apiKey));
+                .getResponse(placesInRadiusUrl.formatted(radius, lng, lat, apiKey));
 
-        ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.readTree(responseBody).get("features").toString();
 
         return objectMapper.readValue(json, new TypeReference<List<Helper>>() {
                 })
                 .stream()
-                .map(h -> h.properties)
+                .map(Helper::getProperties)
                 .map(p -> {
                     p.setDescription(getDescriptionByXid(p.getXid()));
-                    return p.toAttractionPlace();
+                    return p.toAttraction();
                 })
                 .collect(Collectors.toList());
-    }
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    @SuppressWarnings("unused")
-    @Data
-    private static class Helper {
-        Properties properties;
-    }
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    @SuppressWarnings("unused")
-    @Data
-    private static class Properties {
-        String name;
-        String kinds;
-        String xid;
-        @JsonIgnoreProperties
-        String description;
-
-        public Attraction toAttractionPlace() {
-            return new Attraction(name, kinds, description);
-        }
     }
 }

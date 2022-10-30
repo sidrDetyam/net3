@@ -21,7 +21,7 @@ public class WeatherRepositoryImpl implements WeatherRepository {
         try {
             String body = RequestSender.getResponse(requestUrl);
             ObjectMapper objectMapper = new ObjectMapper();
-            var tree = objectMapper.readTree(body).get("current");
+            var tree = objectMapper.readTree(body).get("main");
             Weather weather = new Weather();
             weather.setTemperature(Double.parseDouble(tree.get("temp").toString()));
             weather.setPressure(Double.parseDouble(tree.get("pressure").toString()));

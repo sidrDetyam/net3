@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.gemuev.net3.controllers.AttractionsListController">
+
+   <ListView fx:id="attractionList" focusTraversable="false" layoutY="42.0" prefHeight="312.0" prefWidth="600.0" />
+   <Button layoutX="258.0" layoutY="359.0" mnemonicParsing="false" onAction="#showListView" text="Return to list" />
+   <ProgressIndicator fx:id="progressIndicator" layoutX="539.0" layoutY="358.0" prefHeight="27.0" prefWidth="46.0" visible="false" />
+   <Label fx:id="weatherLabel" layoutX="14.0" layoutY="14.0">
+      <font>
+         <Font name="Consolas" size="20.0" />
+      </font>
+   </Label>
+
+</AnchorPane>

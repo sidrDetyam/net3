@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.nsu.gemuev.net3.controllers.MainViewController">
+
+    <TextField fx:id="placeNameField" alignment="CENTER" focusTraversable="false" layoutX="101.0" layoutY="166.0"
+               onAction="#onPlaceNameInput" prefHeight="26.0" prefWidth="398.0" promptText="Enter place name"/>
+    <Button layoutX="262.0" layoutY="231.0" onAction="#onPlaceNameInput" prefHeight="26.0" prefWidth="75.0"
+            text="Search"/>
+    <ProgressIndicator fx:id="progressIndicator" layoutX="539.0" layoutY="358.0" prefHeight="27.0" prefWidth="46.0"
+                       visible="false"/>
+</AnchorPane>
